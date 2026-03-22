@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 import Navbar from "./components/Navbar";
 import Home from "./components/pages/Home";
 import About from "./components/pages/About";
@@ -16,31 +17,45 @@ import Dashboard from "./components/pages/Dashboard";
 export default function App() {
   const [page, setPage] = useState("Home");
 
+  // ✅ ADD THIS (USER STATE)
+  const [user, setUser] = useState(null);
+
+  // ✅ LOAD USER FROM LOCAL STORAGE
+  useEffect(() => {
+    const savedUser = JSON.parse(localStorage.getItem("user"));
+    if (savedUser) setUser(savedUser);
+  }, []);
+
   const renderPage = () => {
     switch (page) {
       case "Home": return <Home />;
       case "About": return <About />;
-      case "Login": return <Login />;
-      case "Register": return <Register />;
-      case "Login": return <Login setPage={setPage} />;
-case "Register": return <Register setPage={setPage} />;
-case "Dashboard": return <Dashboard setPage={setPage} />;
-
       case "Products": return <Products />;
       case "Exports": return <Exports />;
       case "Farm": return <Farm />;
-       case "Vegetables": return <Vegetables />;
+      case "Vegetables": return <Vegetables />;
       case "Contact": return <Contact />;
+
+      // ✅ FIXED LOGIN / REGISTER
+      case "Login": return <Login setPage={setPage} setUser={setUser} />;
+      case "Register": return <Register setPage={setPage} setUser={setUser} />;
+      case "Dashboard": return <Dashboard setPage={setPage} />;
+
       default: return <Home />;
     }
   };
 
   return (
     <div className="min-h-screen">
-      <Navbar setPage={setPage} />
+
+      {/* ✅ PASS USER HERE */}
+      <Navbar setPage={setPage} user={user} setUser={setUser} />
+
       {renderPage()}
+
       <Footer />
       <ChatPopup />
     </div>
   );
 }
+

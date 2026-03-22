@@ -1,7 +1,11 @@
 import { useState } from "react";
 
-export default function Login({ setPage }) {
-  const [form, setForm] = useState({ email: "", password: "" });
+export default function Login({ setPage, setUser }) {
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
   const [success, setSuccess] = useState(false);
 
   const handleSubmit = (e) => {
@@ -12,12 +16,24 @@ export default function Login({ setPage }) {
       return;
     }
 
+    const userData = {
+      email: form.email,
+    };
+
+    // ✅ Save user
+    localStorage.setItem("user", JSON.stringify(userData));
+
+    // ✅ Update state
+    setUser(userData);
+
+    // ✅ Show popup
     setSuccess(true);
 
+    // ✅ Redirect to Dashboard
     setTimeout(() => {
       setSuccess(false);
       setPage("Dashboard");
-    }, 1500);
+    }, 1200);
   };
 
   return (
@@ -25,26 +41,34 @@ export default function Login({ setPage }) {
 
       <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
 
-        <h2 className="text-2xl font-bold mb-6 text-center">Sign In</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">
+          Sign In
+        </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+
           <input
             type="email"
             placeholder="Email"
-            className="w-full border p-2 rounded-lg"
-            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            className="w-full border p-3 rounded-lg"
+            onChange={(e) =>
+              setForm({ ...form, email: e.target.value })
+            }
           />
 
           <input
             type="password"
             placeholder="Password"
-            className="w-full border p-2 rounded-lg"
-            onChange={(e) => setForm({ ...form, password: e.target.value })}
+            className="w-full border p-3 rounded-lg"
+            onChange={(e) =>
+              setForm({ ...form, password: e.target.value })
+            }
           />
 
-          <button className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700">
+          <button className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition">
             Login
           </button>
+
         </form>
 
         {/* Success Popup */}
@@ -54,6 +78,7 @@ export default function Login({ setPage }) {
           </div>
         )}
 
+        {/* Switch to Register */}
         <p className="text-sm text-center mt-4">
           Don't have an account?{" "}
           <span
@@ -63,8 +88,8 @@ export default function Login({ setPage }) {
             Register
           </span>
         </p>
-      </div>
 
+      </div>
     </div>
   );
 }

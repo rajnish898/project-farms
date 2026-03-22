@@ -81,10 +81,9 @@ export default function About() {
   };
 
   return (
-    <div className="min-h-screen flex">
-
-      {/* Mobile Top Bar */}
-      <div className="md:hidden fixed top-0 left-0 w-full bg-green-600 text-white flex justify-between items-center p-4 z-50">
+    <div className="min-h-screen flex mt-20 md:mt-24">
+      {/* Mobile Top Bar (adjusted below navbar) */}
+      <div className="md:hidden fixed top-16 left-0 w-full bg-green-600 text-white flex justify-between items-center p-4 z-40">
         <h1 className="font-bold">About</h1>
         <button onClick={() => setOpen(!open)}>
           <FaBars />
@@ -92,14 +91,16 @@ export default function About() {
       </div>
 
       {/* Sidebar */}
-     <div className={`
-  fixed md:relative top-0 left-0 md:h-auto h-full w-64 
-  bg-gradient-to-b from-green-200 via-green-100 to-white 
-  text-gray-800 p-6 space-y-4
-  md:rounded-r-3xl md:shadow-xl
-  transform ${open ? "translate-x-0" : "-translate-x-full"} 
-  md:translate-x-0 transition-transform duration-300 z-40
-`}>
+      <div
+        className={`
+        fixed md:relative top-0 md:top-0 left-0 md:h-auto h-full w-64
+        bg-gradient-to-b from-green-200 via-green-100 to-white
+        text-gray-800 p-6 space-y-4
+        md:rounded-r-3xl md:shadow-xl
+        transform ${open ? "translate-x-0" : "-translate-x-full"}
+        md:translate-x-0 transition-transform duration-300 z-40
+      `}
+      >
         <h1 className="text-2xl font-bold mb-6 hidden md:block">About</h1>
 
         {menu.map((item) => (
@@ -111,8 +112,8 @@ export default function About() {
             }}
             className={`flex items-center gap-3 p-2 rounded w-full text-left transition ${
               active === item.id
-                ? "bg-white text-green-600"
-                : "hover:bg-green-500"
+                ? "bg-white text-green-600 shadow"
+                : "hover:bg-green-300"
             }`}
           >
             {item.icon}
@@ -122,7 +123,7 @@ export default function About() {
       </div>
 
       {/* Content */}
-      <div className="flex-1 p-6 md:p-10 mt-16 md:mt-0">
+      <div className="flex-1 p-6 md:p-10 mt-12 md:mt-0">
         <motion.div
           key={active}
           initial={{ opacity: 0, x: 40 }}
@@ -132,7 +133,6 @@ export default function About() {
           {renderContent()}
         </motion.div>
       </div>
-
     </div>
   );
 }
