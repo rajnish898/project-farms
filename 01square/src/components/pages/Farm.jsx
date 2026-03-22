@@ -55,7 +55,7 @@ export default function Farm() {
         <div className="aspect-video rounded-xl overflow-hidden shadow-lg">
           <iframe
             className="w-full h-full"
-            src="https://youtu.be/Nm-zMvD6MLk?si=iWllRCdGUlKgkNr7"
+            src="https://youtube.com/shorts/kqhHAjVIeq4?si=ilLWSe0EloNkqgqA"
             title="Farm Video"
             frameBorder="0"
             allowFullScreen
